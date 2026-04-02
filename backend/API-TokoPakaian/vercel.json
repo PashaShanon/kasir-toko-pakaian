@@ -11,7 +11,6 @@
   "env": {
     "NODE_ENV": "production"
   },
-  "envPrefix": "",
   "public": false,
   "rewrites": [{ "source": "/(.*)", "destination": "/server.js" }],
   "headers": [
