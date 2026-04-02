@@ -1,0 +1,9 @@
+.git
+.gitignore
+.env.local
+.env.*.local
+*.log
+*.pem
+src/**/*.test.js
+.vscode
+.idea

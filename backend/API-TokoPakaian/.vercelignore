@@ -1,0 +1,6 @@
+.gitignore
+.git
+.env.local
+.env.*.local
+*.log
+*.pem
