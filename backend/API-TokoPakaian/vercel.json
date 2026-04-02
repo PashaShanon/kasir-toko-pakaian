@@ -1,12 +1,30 @@
 {
   "version": 2,
   "buildCommand": "npm install",
+  "framework": "express",
+  "functions": {
+    "server.js": {
+      "memory": 1024,
+      "maxDuration": 300
+    }
+  },
   "env": {
     "NODE_ENV": "production"
   },
-  "envPrefix": "BACKEND_",
+  "envPrefix": "",
   "public": false,
   "rewrites": [
     { "source": "/(.*)", "destination": "/server.js" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }
   ]
 }

@@ -2,8 +2,9 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "build",
+  "framework": "vite",
   "env": {
-    "VITE_API_URL": "@vite_api_url"
+    "VITE_API_URL": "https://api.tokopakain.vercel.app/api"
   },
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
