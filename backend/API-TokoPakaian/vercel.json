@@ -13,9 +13,7 @@
   },
   "envPrefix": "",
   "public": false,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/server.js" }
-  ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/server.js" }],
   "headers": [
     {
       "source": "/api/(.*)",

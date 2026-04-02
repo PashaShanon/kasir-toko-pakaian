@@ -6,7 +6,5 @@
   "env": {
     "VITE_API_URL": "https://api.tokopakain.vercel.app/api"
   },
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
