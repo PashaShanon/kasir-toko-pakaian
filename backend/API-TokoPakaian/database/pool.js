@@ -1,32 +1,42 @@
 const { Pool } = require("pg");
 require("dotenv").config();
 
-// Database configuration - prioritize local development config
-const dbConfig = {
-  user: process.env.DB_USER || "postgres",
-  host: process.env.DB_HOST || "localhost",
-  database: process.env.DB_NAME || "toko_online",
-  password: process.env.DB_PASSWORD || "postgres",
-  port: parseInt(process.env.DB_PORT) || 5432,
-  // Connection pool settings
-  max: 20, // maksimal 20 koneksi dalam pool
-  idleTimeoutMillis: 30000, // timeout untuk koneksi idle
-  connectionTimeoutMillis: 2000, // timeout untuk koneksi baru
-  // SSL configuration untuk production
-  ssl:
-    process.env.NODE_ENV === "production"
-      ? {
-          rejectUnauthorized: false,
-        }
-      : false,
-};
+// Database configuration - prioritize DATABASE_URL if available (Supabase)
+let dbConfig;
 
-// Jika ada DATABASE_URL dan environment adalah production, gunakan itu
-if (process.env.DATABASE_URL && process.env.NODE_ENV === "production") {
-  dbConfig.connectionString = process.env.DATABASE_URL;
-  dbConfig.ssl = {
-    rejectUnauthorized: false,
+if (process.env.DATABASE_URL) {
+  // Use connection string from DATABASE_URL (Supabase pooler)
+  dbConfig = {
+    connectionString: process.env.DATABASE_URL,
+    max: 20, // maksimal 20 koneksi dalam pool
+    idleTimeoutMillis: 30000, // timeout untuk koneksi idle
+    connectionTimeoutMillis: 2000, // timeout untuk koneksi baru
+    ssl: {
+      rejectUnauthorized: false, // Required for Supabase
+    },
   };
+  console.log("Using DATABASE_URL (Supabase pooler connection)");
+} else {
+  // Fallback to individual configuration variables (local development)
+  dbConfig = {
+    user: process.env.DB_USER || "postgres",
+    host: process.env.DB_HOST || "localhost",
+    database: process.env.DB_NAME || "toko_online",
+    password: process.env.DB_PASSWORD || "postgres",
+    port: parseInt(process.env.DB_PORT) || 5432,
+    // Connection pool settings
+    max: 20, // maksimal 20 koneksi dalam pool
+    idleTimeoutMillis: 30000, // timeout untuk koneksi idle
+    connectionTimeoutMillis: 2000, // timeout untuk koneksi baru
+    // SSL configuration untuk production
+    ssl:
+      process.env.NODE_ENV === "production"
+        ? {
+            rejectUnauthorized: false,
+          }
+        : false,
+  };
+  console.log("Using individual DB config variables");
 }
 
 const pool = new Pool(dbConfig);
