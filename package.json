@@ -7,8 +7,7 @@
     "server": "npm start --prefix backend/API-TokoPakaian",
     "dev:all": "concurrently \"npm run dev\" \"npm run server\"",
     "build": "npm run build --prefix frontend",
-    "install:all": "npm install && npm install --prefix frontend && npm install --prefix backend/API-TokoPakaian",
-    "postinstall": "npm install --prefix frontend && npm install --prefix backend/API-TokoPakaian"
+    "install:all": "npm install && npm install --prefix frontend && npm install --prefix backend/API-TokoPakaian"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
