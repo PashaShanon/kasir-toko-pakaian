@@ -8,7 +8,7 @@ const swaggerUi = require('swagger-ui-express');
 const specs = require('./config/swagger');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || process.env.SERVER_PORT || 8000;
 
 // Security middleware
 app.use(helmet());
@@ -26,13 +26,17 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// CORS configuration - lebih fleksibel untuk development
+// CORS configuration - untuk development dan production
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
   'http://localhost:5173',
   'http://127.0.0.1:3000',
-  process.env.CLIENT_URL
+  'http://localhost:8000',
+  process.env.CLIENT_URL,
+  process.env.FRONTEND_URL,
+  // Vercel domains
+  /.+\.vercel\.app$/
 ].filter(Boolean);
 
 app.use(cors({
@@ -171,4 +175,4 @@ if (!process.env.VERCEL) {
     console.log(`   Admin: admin@demo.com / admin123`);
     console.log(`   Kasir: kasir@demo.com / kasir123`);
   });
-}
+}
