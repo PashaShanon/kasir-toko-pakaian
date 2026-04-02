@@ -1,7 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { ShoppingBag, Eye, EyeOff, AlertCircle, Mail, Lock } from "lucide-react";
+import {
+  ShoppingBag,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  Mail,
+  Lock,
+} from "lucide-react";
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -18,31 +25,31 @@ function Login({ onLogin }) {
     setIsLoading(true);
 
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
-      const response = await axios.post(
-        `${API_BASE_URL}/auth/login`,
-        {
-          email,
-          password,
-          remember_me: rememberMe,
-        }
-      );
+      const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+        email,
+        password,
+        remember_me: rememberMe,
+      });
 
       localStorage.setItem("token", response.data.data.accessToken);
       localStorage.setItem("refreshToken", response.data.data.refreshToken);
       localStorage.setItem("user", JSON.stringify(response.data.data.user));
-      
+
       if (onLogin) {
         onLogin(true);
       }
-      
+
       alert("Login berhasil!");
       navigate("/dashboard");
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.message || "Login gagal! Periksa email dan password Anda.");
+      setError(
+        err.response?.data?.message ||
+          "Login gagal! Periksa email dan password Anda.",
+      );
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -54,7 +61,9 @@ function Login({ onLogin }) {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 text-white rounded-2xl shadow-lg shadow-blue-200 mb-6">
               <ShoppingBag size={32} />
             </div>
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Fashion POS</h1>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+              Fashion POS
+            </h1>
             <p className="text-slate-500 mt-2 font-medium">
               Sistem Kasir Pakaian Modern
             </p>
@@ -69,7 +78,10 @@ function Login({ onLogin }) {
             )}
 
             <div className="mb-5">
-              <label className="block text-sm font-semibold text-slate-700 mb-2" htmlFor="email">
+              <label
+                className="block text-sm font-semibold text-slate-700 mb-2"
+                htmlFor="email"
+              >
                 Email
               </label>
               <div className="relative">
@@ -89,7 +101,10 @@ function Login({ onLogin }) {
             </div>
 
             <div className="mb-6">
-              <label className="block text-sm font-semibold text-slate-700 mb-2" htmlFor="password">
+              <label
+                className="block text-sm font-semibold text-slate-700 mb-2"
+                htmlFor="password"
+              >
                 Password
               </label>
               <div className="relative">
@@ -125,11 +140,17 @@ function Login({ onLogin }) {
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
                 />
-                <label htmlFor="remember" className="text-sm font-medium text-slate-600 cursor-pointer">
+                <label
+                  htmlFor="remember"
+                  className="text-sm font-medium text-slate-600 cursor-pointer"
+                >
                   Ingat saya
                 </label>
               </div>
-              <a href="#" className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+              <a
+                href="#"
+                className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+              >
                 Lupa password?
               </a>
             </div>
@@ -144,13 +165,21 @@ function Login({ onLogin }) {
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   <span>Memproses...</span>
                 </div>
-              ) : "Masuk"}
+              ) : (
+                "Masuk"
+              )}
             </button>
           </form>
 
           <div className="bg-slate-50 p-6 text-center border-t border-slate-100">
             <p className="text-sm text-slate-600">
-              Belum punya akun? <Link to="/register" className="font-bold text-blue-600 hover:text-blue-700">Daftar sekarang</Link>
+              Belum punya akun?{" "}
+              <Link
+                to="/register"
+                className="font-bold text-blue-600 hover:text-blue-700"
+              >
+                Daftar sekarang
+              </Link>
             </p>
           </div>
         </div>
@@ -158,6 +187,5 @@ function Login({ onLogin }) {
     </div>
   );
 }
-
 
 export default Login;
